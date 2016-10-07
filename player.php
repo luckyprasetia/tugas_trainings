@@ -112,12 +112,20 @@ while($running) {
 # ------------------------------------------------- ---- #
 Battle Start:
 who will attack: ";$player1 = fgets (STDIN);
-        if(!in_array($player1, $newPlayer)) {
+        if(in_array($player1, $newPlayer)) {
+            $keyPlayer1 = array_search($player1, $newPlayer);
+
+        }
+        else {
             echo "player tidak terdaftar";
             break;
         }
         echo "who will attacked: ";$player2 = fgets (STDIN);
-        if(!in_array($player2, $newPlayer)) {
+        if(in_array($player2, $newPlayer)) {
+            $keyPlayer2 = array_search($player2, $newPlayer);
+
+        }
+        else {
             echo "player tidak terdaftar";
             break;
         }
