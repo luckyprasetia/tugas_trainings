@@ -1,34 +1,12 @@
 <?php
-class BattleRoyal {
-    protected $playerName;
-
-    public function __construct()
-    {
-        $this->playerName = "#";
-    }
-
-    public function mainScreen() {
-        echo "# ============================== #
-            # Welcome to the Battle Arena #
-            # ------------------------------------------------- ---- #
-            # Description: #
-            # 1 type \"new\" to create a character #
-            # 2. type \"start\" to begin the fight #
-            # ------------------------------------------------- ---- #
-            # Current Player: #
-            # - #
-            # * Max player 2 or 3 #
-            # ------------------------------------------------- ---- #";
-    }
-}
 
 class Player{
     protected $blood;
     protected $mana;
     protected $name;
 
-    public function __construct ($name) {
-        $this-> name = $name;
+    public function __construct () {
+        $this-> name = "#";
         $this-> blood = 100;
         $this-> mana = 40;
     }
@@ -82,26 +60,18 @@ class Player{
     }
 }
 
-$main = new BattleRoyal();
-$main->mainScreen();
-$running = true;
-while($running){
-    echo
-"# ============================== #
-# Welcome to the Battle Arena #
-# ------------------------------------------------- ---- #
-# Description: #
-# 1 type \"new\" to create a character #
-# 2. type \"start\" to begin the fight #
-# ------------------------------------------------- ---- #
-# Current Player: #
-# - #
-# * Max player 2 or 3 #
-# ------------------------------------------------- ---- #";
-    echo "\n";
-    fscanf(STDIN, "%s\n", $state);
-    echo $state;
-    if($state == "new"){
+class BattleRoyal {
+    protected $player;
+    #protected $playerName;
+    protected $playerCount;
+    public function __construct()
+    {
+        $this->playerCount = 0;
+        $this->player = new Player();
+    }
+
+    public function mainScreen($playerName) {
+        #$this->playerName = $this->player->getName();
         echo "# ============================== #
 # Welcome to the Battle Arena #
 # ------------------------------------------------- ---- #
@@ -109,17 +79,58 @@ while($running){
 # 1 type \"new\" to create a character #
 # 2. type \"start\" to begin the fight #
 # ------------------------------------------------- ---- #
-# Put Player Name:  #
+# Current Player: $playerName
 # - #
 # * Max player 2 or 3 #
 # ------------------------------------------------- ---- #";
-        echo "\n";
-        fscanf(STDIN, "%s\n", $playername);
     }
-    else break;
 
+    public function newPlayer() {
+        echo "# ============================== #
+# Welcome to the Battle Arena #
+# ------------------------------------------------- ---- #
+# Description: #
+# 1 type \"new\" to create a character #
+# 2. type \"start\" to begin the fight #
+# ------------------------------------------------- ---- #
+# Put Player Name #
+# - #
+# * Max player 2 or 3 #
+# ------------------------------------------------- ---- #";
+    }
+    /**
+     * @return int
+     */
+    public function getPlayerCount()
+    {
+        return $this->playerCount;
+    }
+
+    /**
+     * @param int $playerCount
+     */
+    public function setPlayerCount($playerCount)
+    {
+        $this->playerCount = $playerCount;
+    }
 }
 
-
-
+$main = new BattleRoyal();
+$namePlayer = "#";
+$newPlayer = new Player();
+$countPlayer = 0;
+$running = true;
+while($running) {
+    $main->mainScreen($newPlayer->getName());
+    echo "\n";
+    fscanf(STDIN, "%s\n", $input);
+    if ($input == "new") {
+        $main->newPlayer();
+        echo "\n";
+        fscanf(STDIN, "%s\n", $namePlayer);
+        $newPlayer->setName($namePlayer);
+        $countPlayer++;
+        $main->setPlayerCount($countPlayer);
+    }
+}
 ?>
