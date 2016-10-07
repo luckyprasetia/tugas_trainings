@@ -5,8 +5,8 @@ class Player{
     protected $mana;
     protected $name;
 
-    public function __construct () {
-        $this-> name = "#";
+    public function __construct ($name) {
+        $this-> name = $name;
         $this-> blood = 100;
         $this-> mana = 40;
     }
@@ -60,32 +60,27 @@ class Player{
     }
 }
 
-class BattleRoyal {
-    protected $player;
-    #protected $playerName;
-    protected $playerCount;
-    public function __construct()
-    {
-        $this->playerCount = 0;
-        $this->player = new Player();
-    }
-
-    public function mainScreen($playerName) {
-        #$this->playerName = $this->player->getName();
-        echo "# ============================== #
+#$main = new BattleRoyal();
+$namePlayer = "#";
+$newPlayer = [];
+$countPlayer = 0;
+$running = true;
+while($running) {
+    echo "# ============================== #
 # Welcome to the Battle Arena #
 # ------------------------------------------------- ---- #
 # Description: #
 # 1 type \"new\" to create a character #
 # 2. type \"start\" to begin the fight #
 # ------------------------------------------------- ---- #
-# Current Player: $playerName
+# Current Player: $countPlayer
 # - #
 # * Max player 2 or 3 #
 # ------------------------------------------------- ---- #";
-    }
-
-    public function newPlayer() {
+    echo "\n";
+    fscanf(STDIN, "%s\n", $input);
+    #echo $input;
+    if ($input == "new") {
         echo "# ============================== #
 # Welcome to the Battle Arena #
 # ------------------------------------------------- ---- #
@@ -97,40 +92,40 @@ class BattleRoyal {
 # - #
 # * Max player 2 or 3 #
 # ------------------------------------------------- ---- #";
-    }
-    /**
-     * @return int
-     */
-    public function getPlayerCount()
-    {
-        return $this->playerCount;
-    }
-
-    /**
-     * @param int $playerCount
-     */
-    public function setPlayerCount($playerCount)
-    {
-        $this->playerCount = $playerCount;
-    }
-}
-
-$main = new BattleRoyal();
-$namePlayer = "#";
-$newPlayer = new Player();
-$countPlayer = 0;
-$running = true;
-while($running) {
-    $main->mainScreen($newPlayer->getName());
-    echo "\n";
-    fscanf(STDIN, "%s\n", $input);
-    if ($input == "new") {
-        $main->newPlayer();
         echo "\n";
-        fscanf(STDIN, "%s\n", $namePlayer);
-        $newPlayer->setName($namePlayer);
         $countPlayer++;
-        $main->setPlayerCount($countPlayer);
+        if($countPlayer > 3 ) {
+            echo "cannot add more player";
+            echo "\n";
+            $countPlayer--;
+        }
+        else {
+            $countPlayer--;
+            fscanf(STDIN, "%s\n", $namePlayer);
+            $newPlayer[$countPlayer]  = new Player($namePlayer);
+            $countPlayer++;
+        }
+    }
+    elseif ($input == "start") {
+        echo "# ============================== #
+# Welcome to the Battle Arena #
+# ------------------------------------------------- ---- #
+Battle Start:
+who will attack: ";$player1 = fgets (STDIN);
+        if(!in_array($player1, $newPlayer)) {
+            echo "player tidak terdaftar";
+            break;
+        }
+        echo "who will attacked: ";$player2 = fgets (STDIN);
+        if(!in_array($player2, $newPlayer)) {
+            echo "player tidak terdaftar";
+            break;
+        }
+        echo "$player1 : mana: ";
+        echo "\n";
+    }
+    for ($i = 0 ; $i < sizeof($newPlayer) ; $i++) {
+        echo $newPlayer[$i]->getName();
     }
 }
 ?>
