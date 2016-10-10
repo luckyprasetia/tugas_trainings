@@ -58,6 +58,12 @@ class Player{
     {
         $this->name = $name;
     }
+
+    public function attack() {
+        #$this->blood = $this->blood - 20;
+        $this->blood =$this->blood - 25;
+        $this->mana =$this->mana - 10;
+    }
 }
 
 ?>
